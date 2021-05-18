@@ -1,0 +1,60 @@
+<！DOCTYPE html >
+< html  lang = " ja " >
+<頭>
+< meta  charset = " utf-8 " >
+< meta  name = " viewport " content = " width = device-width、initial-scale = 1 " >
+<スタイル タイプ= " text / css " >
+/ * CSSをここにちく* /
+</スタイル>
+< title >加速する</ title >
+</ヘッド>
+<本体>
+< button  onclick = " request_permission（） " >シンを有効望承</ボタン>
+< div  id = " txt " >ここに出を表示</ div >
+<スクリプト>
+//ゾルを有効化する  
+関数 request_permission （） {
+    if  （
+        DeviceMotionEvent  &&
+        DeviceMotionEvent 。requestPermission  &&
+        typeof演算 DeviceMotionEvent 。requestPermission  ===  '関数'
+    ） {
+        DeviceMotionEvent 。requestPermission （）;
+    } ;
+    if  （
+        DeviceOrientationEvent  &&
+        DeviceOrientationEvent 。requestPermission  &&
+        typeof演算 DeviceOrientationEvent 。requestPermission  ===  '関数'
+    ） {
+        DeviceOrientationEvent 。requestPermission （）;
+    } ;
+} ;
+//ここの加速を加速すること  
+var  aX  =  0 、 aY  =  0 、 aZ  =  0 ;   //加速の値を変数を3個にする
+ var  acc = 0 ;
+    
+//加速度センサーの値がありますデバイスモーション
+ウィンドウ。addEventListener （"devicemotion" 、 （dat ） =>  {
+    aX  =  dat 。重力を含むacceleration 。x ;     // x軸の重力加速度（AndroidとiOSの正負が逆）
+    aY  =  dat 。重力を含むacceleration 。y ;     // y軸の重力加速度（AndroidとiOSで正負が逆）
+    aZ  =  dat 。重力を含むacceleration 。z ;     // z軸の重力加速度（AndroidとiOSで正負が逆）
+    acc  =  Math 。sqrt （aX * aX  +  aY * aY  +  aZ * aZ ）;
+} ）;
+ 
+//タイマー時間完了にセットタイマー設定Interval（実行する内容、タイマー[ms]）タイマーを設定
+var  timer  =  window 。setInterval （（） =>  {
+    displayData （）;       // displayData関数を
+} 、 33 ）;  // 33msごとに（1回に約30回）
+ 
+//データを表示するdisplayData関数
+関数 displayData （） {
+    var  txt  =  document 。getElementById （"txt" ）;    //データを表示するdivを見た
+    txt 。innerHTML  =  "x："  +  aX  +  "<br>"          // x軸の値
+                  +  "y："  +  aY  +  "<br>"          // y軸の値
+                  +  "z："  +  aZ +  "<br>"
+                  +  "acc："  +  acc +  "<br>"
+}
+//
+</スクリプト>
+</本文>
+</ html >
